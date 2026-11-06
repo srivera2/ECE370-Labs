@@ -1,0 +1,60 @@
+name: HIL_Tests
+
+on:
+  push:
+    branches:
+      - master
+      - HIL_actions
+
+jobs:
+  Get_Repository:
+    runs-on: RPi-HIL
+    steps:
+      - uses: actions/checkout@v1
+          
+  PC_Application_RPi5:
+    runs-on: RPi-HIL
+    needs: Get_Repository
+    steps:
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libusb-1.0-0-dev qt6-tools-dev qt6-base-dev qt6-svg-dev
+
+      - name: Build application
+        run: |
+          cd Software/PC_Application/LibreVNA-GUI
+          qmake6 LibreVNA-GUI.pro
+          make -j9
+        shell: bash
+          
+  Embedded_Firmware:
+    runs-on: RPi-HIL
+    needs: Get_Repository
+    steps:
+      - name: Install toolchain
+        run: |
+          sudo apt-get install -y gcc-arm-none-eabi binutils-arm-none-eabi
+        
+      - name: Build application
+        run: |
+          cd Software/VNA_embedded
+          make -j9
+          cp build/VNA_embedded.elf ../../
+        shell: bash
+
+      - name: Combine with FPGA bitstream
+        run: |
+          python3 AssembleFirmware.py
+        shell: bash
+        
+  HIL:
+    runs-on: RPi-HIL
+    needs: [PC_Application_RPi5, Embedded_Firmware]
+    steps:
+      - name: Run HIL tests
+        run: |      
+          cd Software/Integrationtests
+          export DISPLAY=:0
+          python3 Integrationtest.py
+

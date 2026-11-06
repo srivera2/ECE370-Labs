@@ -1,0 +1,12 @@
+*
+!.gitignore
+!*/
+!*.vhd
+!*.ucf
+!*.ipf
+!*.gise
+!*.xise
+!*.py
+!*.bin
+!VNA/*.dat
+
