@@ -38,8 +38,8 @@
 \newcommand{\todo}[1][Answer here.]{\textcolor{red!60!black}{\textit{[#1]}}}
 
 \title{ECE 370/590 Laboratory Exercise 1:\\ The Dipole Antenna}
-\author{Roshan Sundaram}
-\date{\todo[date]}
+\author{Roshan Sundaram, Samuel Rivera, Shreyas Banaji}
+\date{\today}
 
 \begin{document}
 \maketitle
@@ -80,15 +80,19 @@ At $f = \SI{1}{GHz}$,
 \answer{As we make the antenna longer, we expect the resonant frequency to decrease, meaning that we expect an impedance of 73~$\Omega$ at a lower frequency. Therefore, the input impedance at 1 GHz should increase as we increase the length of the antenna.}
 
 \begin{question}How might the conductor diameter or width affect resonance and bandwidth?\end{question}
-\answer{\todo}
+\answer{The conductor diameter affects the fractional bandwidth, $B$, according to:}
+\begin{equation}
+    B = \frac{\Delta f}{f_0} = \frac{4\sqrt{2}}{\pi^2} \cdot \frac{R_{\text{rad}}}{120 \left[ \ln\left(\frac{l}{d}\right) - 1 \right]}
+\end{equation}
+where $l$ is the length of the dipole and $d$ is the diameter. In the event that $d$ increases, $B$ would (generally) increase. As for the resonance frequency, we can assume that a larger diameter (or width) would cause the resonance frequency to decrease.
 
 % ═════════════════════════════════════════════════════════════
 \section{CST Simulation (Exercise 1.2)}
 
 \subsection{Model setup}
 
-We modeled the copper tape dipole 
-\todo[Solver (time domain), frequency range \SIrange{0.7}{1.3}{GHz}, open (add space) boundaries, discrete \SI{50}{\ohm} port across the feed gap, conductor material (copper vs.\ PEC), foam board included or not, mesh cell count and convergence check. State the simulated length $L$.]
+We modeled the copper tape dipole matching our analytical design. Out of the available solvers, we chose to use the time domain solver between 0.5 - 1.5 GHz. The antenna's feed was modeled using a discrete port. The port was assigned an impedance of 50 ohms and the ``substrate'' was modeled using a vacuum. This is because we plan to fabricate the antenna using a thin poster board rather than a traditional substrate like FR-4.
+% \todo[Solver (time domain), frequency range \SIrange{0.7}{1.3}{GHz}, open (add space) boundaries, discrete \SI{50}{\ohm} port across the feed gap, conductor material (copper vs.\ PEC), foam board included or not, mesh cell count and convergence check. State the simulated length $L$.]
 
 \subsection{Reflection coefficient and input impedance}
 
@@ -109,24 +113,24 @@ We modeled the copper tape dipole
 \begin{figure}[H]
   \centering
   \includegraphics[width=\linewidth]{\simdir/Z1,1.png}
-  \caption{Simulated input impedance $Z_{11}$. At \SI{1}{GHz}: $Z_{11} = 107.9 + j23.7~\Omega$. Reactance crosses zero near \todo[$\approx$\SI{0.90}{GHz}; read exact value from a marker].}
+  \caption{Simulated input impedance $Z_{11}$. At \SI{1}{GHz}: $Z_{11} = 107.9 + j23.7~\Omega$. Reactance crosses zero near {0.90}{GHz}.}
   \label{fig:sim-z11}
 \end{figure}
 
 \begin{table}[H]
   \centering
-  \caption{Simulated resonance summary (\SI{1}{in} tape, $L = $ \todo[...]).}
+  \caption{Simulated resonance summary (\SI{1}{in} tape, $L = $ 150mm.}
   \label{tab:sim-summary}
   \begin{tabular}{@{}lc@{}}
     \toprule
     Quantity & Value \\
     \midrule
-    Zero-reactance frequency $f_{X=0}$ & \todo[$\approx$\SI{0.90}{GHz}] \\
-    $R_\text{in}$ at $f_{X=0}$ & \todo[$\approx$\SI{75}{\ohm}] \\
-    Frequency of min $|S_{11}|$ & \todo[\SI{0.873}{GHz}] \\
+    Zero-reactance frequency $f_{X=0}$ & \SI{0.904}{GHz} \\
+    $R_\text{in}$ at $f_{X=0}$ & \SI{74.87}{\ohm} \\
+    Frequency of min $|S_{11}|$ (Resonant Frequency) & \SI{0.873}{GHz} \\
     Min $|S_{11}|$ & \SI{-15.1}{dB} \\
-    \SI{-10}{dB} band & \todo[$\approx$\SIrange{0.82}{0.93}{GHz}] \\
-    Fractional bandwidth & \todo[...] \\
+    \SI{-10}{dB} band & \SIrange{0.807}{0.964}{GHz} \\
+    Fractional bandwidth & $\approx$0.157 \\
     $Z_{11}$ at \SI{1}{GHz} & $107.9 + j23.7~\Omega$ \\
     Radiation efficiency at \SI{1}{GHz} & 0.9998 \\
     Directivity at \SI{1}{GHz} & \SI{2.19}{dBi} \\
@@ -170,40 +174,57 @@ We modeled the copper tape dipole
 \end{figure}
 
 \subsection{Parameter sweep}
-\todo[Length sweep for the \SI{1}{in} model. Only the \SI{0.5}{in} model currently has a sweep (\texttt{Plots/0.5 Inch/}, files \texttt{S1,1\_130} to \texttt{S1,1\_160}); either run the same sweep at \SI{1}{in} or include the \SI{0.5}{in} sweep and say so.]
+We selectively swept $L$ from \SI{150}{mm} to \SI{126}{mm} to see if we could shift the resonant frequency to $\approx$ 1 GHz. After the sweep, the best result was shown for $L = \SI{131}{mm}$. You will find that the 
 
-% \begin{figure}[H]
-%   \centering
-%   \includegraphics[width=\linewidth]{Plots/1 Inch/S11_sweep_L.png}
-%   \caption{Simulated $|S_{11}|$ for $L = $ \SIrange{130}{160}{mm}.}
-%   \label{fig:sim-sweep}
-% \end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\linewidth]{Lab 1/Data/1_ghz_resonant.png}
+  \caption{Simulated $|S_{11}|$ for $L = $ \SIrange{126}{150}{mm}.}
+  \label{fig:sim-sweep}
+\end{figure}
 
 \begin{question}How closely does the simulated resonant length agree with your analytical estimate?\end{question}
-\answer{\todo}
-
+\answer{The simulated resonant length, \SI{131}{mm}, is \SI{19}{mm} off of our analytical estimate. This is approximately $13\%$ decrease in length, so sizable to say the least.}
 \begin{question}What happens to the input impedance as the dipole length changes?\end{question}
-\answer{\todo}
+\answer{As the dipole length decreases, the input impedance also decreases.}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\linewidth]{Lab 1/Data/input_impedance.png}
+    \caption{$L$ vs. Input Impedance (Real Part)}
+    \label{fig:placeholder}
+\end{figure}
 
 \begin{question}How does the predicted bandwidth depend on conductor thickness or width?\end{question}
-\answer{\todo}
+\answer{The predicted bandwidth shrinks as the conductor width decreases. We swept the simulation from \SI{254}{mm} to \SI{50}{mm}}.
 
-\begin{question}What current distribution is observed along the antenna near resonance?\end{question}
-\answer{\todo}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\linewidth]{Lab 1/Data/fractional_bandwidth.png}
+    \caption{$|S_{11}|$ from $w = 254 - 50~{\text{mm}}$}
+    \label{fig:placeholder}
+\end{figure}
 
-\noindent\textbf{Selected fabrication geometry:} \todo[...]
+\begin{question}What current distribution is observed along the antenna near resonance?
+\end{question}
+\answer{The surface current following the near-triangular profile we'd expect for an ideal-dipole}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\linewidth]{Lab 1/Data/surface_current.png}
+    \caption{Linear Surface Current Plot (2D)}
+    \label{fig:placeholder}
+\end{figure}
 
 % ═════════════════════════════════════════════════════════════
 \section{Fabrication (Exercise 1.3)}
 
-\todo[Copper tape (\SI{1}{in} wide) on foam board; feed gap; SMA-to-screw-terminal adapter attachment; strain relief; how lengths were changed (trimmed one specimen from \SI{18.5}{cm} downward, or separate specimens).]
+We were not able to procure $1~\text{in}$ copper tape, so our fabricated antenna was modified slightly. We used a foam poster board as a substrate, replacing the $1~\text{in}$ copper tape with $0.5~\text{in}$. The antenna feed was constructed using a SMA to Screw Terminal from Atlas Scientific, with a feed gap matching our simulation design. The following figure shows the antenna after we cut its length down to a quarter wavelength.
 
-% \begin{figure}[H]
-%   \centering
-%   \includegraphics[width=0.7\linewidth]{photos/built_antenna.jpg}
-%   \caption{As-built copper-tape dipole.}
-%   \label{fig:built}
-% \end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.5\linewidth]{Lab 1/dipole.jpg}
+  \caption{As-built copper-tape dipole.}
+  \label{fig:built}
+\end{figure}
 
 \begin{table}[H]
   \centering
@@ -213,10 +234,9 @@ We modeled the copper tape dipole
     \toprule
     Dimension & Design & As built \\
     \midrule
-    Total length $L$ & \todo[...] & \SIlist{18.5;18;17;16;15}{cm} \\
-    Strip width $w$ & \SI{25.4}{mm} & \todo[...] \\
-    Feed gap $g$ & \todo[...] & \todo[...] \\
-    Lead length & \todo[...] & \todo[...] \\
+    Total length $L$ & \SI{13.1}{mm} & \SIlist{18.5;18;17;16;15}{cm} \\
+    Strip width $w$ & \SI{25.4}{mm} & \SI{12.7}{mm} \\
+    Feed gap $g$ & \SI{12.7}{mm} & \SI{12.7}{mm} \\
     \bottomrule
   \end{tabular}
 \end{table}
