@@ -364,22 +364,22 @@ Looking at the values in Table 5, each value of $R_r$ and the values of $R_{in}$
 \section{Discussion}
 
 \subsection*{Resonant length vs.\ half wavelength}
-\todo
+The resonant length of a practical dipole is slightly shorter than exactly one-half wavelength due to fringing capacitance at the tips, commonly known as``end effects.'' Interestingly, our antenna feed design made the 1 GHz resonance antenna length to be right around 18 mm rather than our simulated value of 13.1 mm. We can ultimately assume that the coax connection is unbalanced.
 
 \subsection*{What determines impedance bandwidth}
-\todo
+The impedance bandwidth of a dipole is primarily determined by the diameter of the radiating element (or width in our case). A thicker element possess a lower quality factor ($Q$), which consequently broadens the frequency range over which the antenna maintains an acceptable impedance match. Our simulated results in Figure 8 show this.
 
 \subsection*{Copper tape vs.\ round wire}
-\todo
+Copper tape has a flat, rectangular cross-section that produces a different surface current distribution, often concentrating currents along its sharp edges. This geometry gives the copper tape a larger equivalent radius compared to a standard thin round wire, which could explain why the impedance bandwidth of our simulated design was a bit wider than one would expect.
 
 \subsection*{Feed-cable influence on a balanced antenna}
-\todo
+A standard coaxial feed cable is inherently unbalanced, whereas a dipole is a symmetrically balanced structure. If connected directly without a balun, common-mode currents will flow down the outside of the coaxial shield, causing the cable itself to radiate and distorting both the expected radiation pattern and the measured input impedance. Again, this is probably why our design varied so much against our simulated antenna.
 
 \subsection*{VNA accuracy and de-embedding}
-\todo
+VNA measurement accuracy is limited by imperfect calibration, connector mismatches, feedline losses, and scattered reflections from the surrounding environment. It was a bit tricky to calibrate, and we didn't always get a clean output after the setup was completed.
 
 \subsection*{Analytical theory vs.\ numerical simulation}
-\todo
+Simple analytical theory reliably predicts idealized characteristics like the general radiation pattern, directivity, and baseline resonance of infinitesimally thin wires in free space. However, full-wave numerical simulation is required to accurately model real-world complexities. Even so, this lab demonstrates that there is still a decent gap between simulation and the fabricated design (especially if you veer off course as we did.)
 
 % ═════════════════════════════════════════════════════════════
 
