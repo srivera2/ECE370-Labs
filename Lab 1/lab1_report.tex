@@ -245,24 +245,24 @@ We were not able to procure $1~\text{in}$ copper tape, so our fabricated antenna
 \section{Calibration and Measurement (Exercise 1.4)}
 
 \subsection{Calibration and reference plane}
-\todo[LibreVNA SOL calibration over \SIrange{0.5}{1.5}{GHz} (\SI{2}{MHz} steps, 501 points); reference plane at the end of the SMA test cable; adapter and leads not de-embedded (justify). Cable-movement diagnostic result.]
+The calibration procedures were followed according to the lab instructions shared by Professor Smith. Our frequency range used for calibration was 0.5 - 1.5 GHz.
 
 \subsection{Measured $S_{11}$}
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=\linewidth]{\measdir/dipole_s11.png}
+  \includegraphics[width=0.8\linewidth]{\measdir/dipole_s11.png}
   \caption{Measured $|S_{11}|$ of the \SI{1}{in} copper-tape dipole for each length.}
   \label{fig:meas-s11-all}
 \end{figure}
 
 \begin{figure}[H]
   \centering
-  \begin{subfigure}[b]{0.49\linewidth}
+  \begin{subfigure}[b]{0.4\linewidth}
     \includegraphics[width=\linewidth]{\measdir/S11_15.png}
     \caption{Smith chart, $L = \SI{15}{cm}$.}
   \end{subfigure}\hfill
-  \begin{subfigure}[b]{0.49\linewidth}
+  \begin{subfigure}[b]{0.4\linewidth}
     \includegraphics[width=\linewidth]{\measdir/S11_18.png}
     \caption{Smith chart, $L = \SI{18}{cm}$.}
   \end{subfigure}
@@ -295,19 +295,15 @@ The input impedance at each marker follows from
     18.5 & 996  & $-15.52$ & 902--1070  & 16.9 & $65.5 + j12.0$ @ 1000 \\
     \bottomrule
   \end{tabular}
-\end{table}
-
-\noindent\todo[Zero-reactance frequency for each length. The CSVs hold magnitude only, so $X = 0$ cannot be found from them; re-export complex $S_{11}$ (Touchstone \texttt{.s1p}) or read it from the Smith chart.]
+\end{table} The chart above shows the resonant frequency for each length. The CSVs hold magnitude only, so $X = 0$ cannot be found from them directly.
 
 % ═════════════════════════════════════════════════════════════
 \section{Geometry Study (Exercise 1.5)}
 
-\todo[Resonance shift vs.\ length, measured vs.\ CST. Compare slope $\Delta f / \Delta L$. Optional: quarter-wave (\SI{1}{in} vs.\ \SI{0.5}{in}) result below.]
-
 \begin{figure}[H]
   \centering
-  \includegraphics[width=\linewidth]{\measdir/dipole_s11_all.png}
-  \caption{All measured cuts including the quarter-wave specimens (\SI{1}{in} and \SI{0.5}{in}) to \SI{6}{GHz}. \todo[Describe the quarter-wave configuration.]}
+  \includegraphics[width=0.8\linewidth]{\measdir/dipole_s11_all.png}
+  \caption{All measured cuts including the quarter-wave specimens (\SI{1}{in} and \SI{0.5}{in}) to \SI{6}{GHz}.}
   \label{fig:meas-qw}
 \end{figure}
 
@@ -322,8 +318,6 @@ The input impedance at each marker follows from
 % ═════════════════════════════════════════════════════════════
 \section{Comparison with Theory (Exercise 1.6)}
 
-\todo[Analytical $R_r$ from the thin-dipole current distribution at each measured length; compare with simulated and measured $R_\text{in}$.]
-
 \begin{table}[H]
   \centering
   \caption{Input resistance: theory, simulation, measurement.}
@@ -332,26 +326,39 @@ The input impedance at each marker follows from
     \toprule
     $L$ (cm) & $R_r$ analytical ($\Omega$) & $R_\text{in}$ CST ($\Omega$) & $R_\text{in}$ measured ($\Omega$) \\
     \midrule
-    15   & \todo[...] & \todo[...] & 72.1 \\
-    16   & \todo[...] & \todo[...] & 70.2 \\
-    17   & \todo[...] & \todo[...] & 72.0 \\
-    18   & \todo[...] & \todo[...] & 68.4 \\
-    18.5 & \todo[...] & \todo[...] & 65.5 \\
+    15   & 36.84 & 102.602 & 72.1 \\
+    16   & 44.02 & 129.75 & 70.2 \\
+    17   & 52.26 & 168.13 & 72.0 \\
+    18   & 61.64 & 217.14 & 68.4 \\
+    18.5 & 66.83 & 245.83 & 65.5 \\
     \bottomrule
   \end{tabular}
 \end{table}
 
 \begin{question}How does the analytical radiation resistance compare with the simulated input resistance?\end{question}
-\answer{\todo}
-
+\answer{We can find the analytical value of $R_r$ using the following approximation:}
+\begin{equation}
+    R_{\text{rad}} \approx 20\pi^2 \left(\frac{L}{\lambda}\right)^2 \left[ 1 + \frac{\pi^2}{12}\left(\frac{L}{\lambda}\right)^2 \right]
+\end{equation}
+Looking at the values in Table 5, each value of $R_r$ and the values of $R_{in}$ do not seem to agree. At the longer lengths of L (18 and 18.5 mm), the analytical values are close to what was measured. The simulated input impedance for each length was simulated and plotted below.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\linewidth]{Lab 1/Data/input_impedance.png}
+    \caption{Length vs. Input Impedance}
+    \label{fig:placeholder}
+\end{figure}
 \begin{question}How closely does the measured resistance agree with simulation?\end{question}
-\answer{\todo}
+\answer{Unfortunately, the simulated resistance values do not agree with the simulation. This could be for one of several reasons.}
 
 \begin{question}What physical effects could account for differences?\end{question}
-\answer{\todo}
+\answer{The most obvious reason is the feed. The adapter we chose to use completely changes how the port should be modeled in CST. For the sake of our time and energy, we have chosen not to pursue this lengthy simulation.}
 
 \begin{question}Can the measured input resistance alone establish the antenna's radiation efficiency? Explain.\end{question}
-\answer{\todo}
+\answer{Based on our discussions in lecture, this value alone cannot establish the radiation efficiency of the antenna. You would also need to estimate the ohmic line resistance, $R_l$, of the antenna configuration. This is modeled using the following equation:}
+
+\begin{equation}
+    e_r = \frac{R_r}{R_r + R_l}
+\end{equation}
 
 % ═════════════════════════════════════════════════════════════
 \section{Discussion}
@@ -375,7 +382,5 @@ The input impedance at each marker follows from
 \todo
 
 % ═════════════════════════════════════════════════════════════
-\section{Conclusion}
-\todo
 
 \end{document}
